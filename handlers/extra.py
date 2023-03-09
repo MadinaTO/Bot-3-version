@@ -22,11 +22,20 @@ async def echo(message: types.Message):
             b = await bot.send_dice(message.chat.id, emoji='🎰')
             print(b.dice.value)
 
-# async def python_word(message: types.Message):
-#     if message.text == 'python':
-#         await bot.send_dice(message.chat.id, emoji='🎰')
+users = {}
+async def user_ban(massage: types.Message):
+    user_name = massage.from_user.username
+    if user_name:
+        user_name = user_name
+    else:
+        user_name = massage.from_user.first_name
+    if massage.from_user.username is not users:
+        users[f'@{user_name}'] = massage.from_user.id
+        print(users)
+    else:
+        pass
 
 
 def register_handlers_extra(dp: Dispatcher):
     dp.register_message_handler(echo)
-    # dp.register_message_handler(python_word)
+    dp.register_message_handler(user_ban)
